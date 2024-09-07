@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <title>RegEx Detector</title>
+</head>
+<body>
+    <header>
+        <p style="font-weight: bold;">Kelompok 10</p>
+        <nav>
+            <a href="#home" class="nav-link active">Home</a>
+            <a href="#app" class="nav-link">Detector</a>
+            <a href="#result" class="nav-link">Result</a>
+            <a href="#tips" class="nav-link">Tips</a>
+        </nav>
+    </header>
+
+    <section id="home" class="home">
+        <div class="home-content">
+            <h1 style="text-align:center;">RegEx Detector</h1>
+            <p style="text-align:center;">Enter your text and RegEx pattern, we’ll scan for any matches. <br> Solving mysteries, one pattern at a time!</p>
+        </div>
+    </section>
+
+    <section id="app" class="Search">
+        <div class="Search-content">
+            <h2 style="text-align:center;">Time to Put on Your Detective Hat!</h2>
+            <h3>Enter Your RegEx Clue</h3>
+            <form id="regexForm" action="/#result" method="POST" class="custom-form">
+                <label for="pattern_option">Select a Known Pattern to Investigate:</label><br>
+                <select id="pattern_option" name="pattern_option" onchange="setPattern()">
+                    <option value="">Input Your Own RegEx Pattern</option>
+                    <option value="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}">Valid email addresses</option>
+                    <option value="[a-zA-Z0-9._%+-]+@unair\.ac\.id">Email addresses ending for students of Universitas Airlangga</option>
+                    <option value="[a-zA-Z0-9._%+-]+@ftmm\.unair\.ac\.id">Email addresses ending for students of FTMM Universitas Airlangga</option>
+                    <option value="\b\d{10}99\d{4}\b">KTP numbers with birth year 1999</option>
+                    <option value="\b[A-Z][a-z]*\b">Words starting with capital letters</option>
+                    <option value="\b\w+\b">Validate alphanumeric and underscores only</option>
+                    <option value="\b\w+\.(pdf|docx|doc|txt)\b">Find document files (pdf, docx, doc, txt)</option>
+                    <option value="(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}">Strong password filter</option>
+                    <option value="\b(166|165|164|162|163)\d{6}\b">Search NIM based on department of FTMM UNAIR</option>
+                    <option value="\+(?:[0-9] ?){6,14}[0-9]">International phone numbers</option>
+                    <option value="(\+62|62|0)8[1-9][0-9]{6,9}">Indonesian phone numbers</option>
+                    <option value="[0-9]{5}(?:-[0-9]{4})?">Postal codes</option>
+                    <option value="(https?|ftp)://[^\s/$.?#].[^\s]*">Valid URL</option>
+                    <option value="4[0-9]{12}(?:[0-9]{3})?">Visa credit card number</option>
+                    <option value="(19|20)\d\d-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])">Date (YYYY-MM-DD)</option>
+                    <option value="(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)">IPv4 address</option>
+                    <option value="#?([a-fA-F0-9]{6}|[a-fA-F0-9]{3})">Hexadecimal color code</option>
+                    <option value="([01]?[0-9]|2[0-3]):[0-5][0-9]">Time (HH:MM)</option>
+                </select><br><br>
+
+                <label for="pattern">Or, Input Your Own RegEx Pattern:</label><br>
+                <input type="text" id="pattern" name="pattern" value="{{ pattern }}" placeholder="Enter your RegEx clue" style="width: 80%;"><br><br>
+
+                <label for="text">Enter the Text to Analyze:</label><br>
+                <textarea id="text" name="text" rows="10" cols="50" style="width: 80%;" placeholder="Enter your text here...">{{ text }}</textarea><br><br>
+                
+                <button type="submit" style="width: 80%;">Detect Patterns</button>
+
+                {% if error_message %}
+                <p class="custom-error">{{ error_message }}</p>
+                {% endif %}
+            </form>
+        </div>
+    </section>
+
+    <section id="result" class="Meaning">
+        <div class="Preview-content">
+            <h2>Did You Crack the Code?</h2>
+            <p>The highlighted parts are your clues!</p>
+            <div id="text" class="text-preview-box">
+                {{ highlighted_text|safe }}
+            </div>
+        </div>
+    </section>
+
+    <section id="tips" class="Meaning">
+        <div class="Tips-content">
+            <h2>Need More Clues?</h2>
+            <p>Here are some helpful hints for your investigation!</p>
+            <aside>
+                <p>Basic RegEx Syntax:</p>
+                <ul>
+                    <code>.</code> → <strong> Matches any character except a newline. </strong> <br>Example: <code>a.c</code> will match "abc", "a1c", or "a_c".</br>
+                    <code>^</code> → <strong>Matches at the start of a string. </strong> <br>Example: <code>^abc</code> will match "abc" only if it's at the beginning of the string.</br>
+                    <code>$</code> → <strong>Matches at the end of a string.</strong> <br>Example: <code>abc$</code> will match "abc" only if it's at the end of the string.</br>
+                    <code>*</code> → <strong>Matches the previous character 0 or more times.</strong> <br>Example: <code>ab*c</code> will match "ac", "abc", "abbc", etc.</br>
+                    <code>+</code> → <strong>Matches the previous character 1 or more times.</strong> <br>Example: <code>ab+c</code> will match "abc", "abbc", but not "ac".</br>
+                    <code>[a-z]</code> → <strong>Matches a single character within the brackets.</strong> <br>Example: <code>[a-z]</code> will match "a", "b", or "c".</br>
+                    <code>\s</code> → <strong>Matches any whitespace character like space, tab, or newline.</strong> <br>Example: <code>\s</code> will match space or tab in the string "a b".</br>
+                    <code>\n</code> → <strong>Matches a newline character.</strong> <br>Example: <code>\n</code> will match a newline character, indicating the end of one line and the start of the next.</br>
+                    <code>\w</code> → <strong>Matches any letter, digit, or underscore.</strong> <br>Example: <code>\w</code> will match "a", "1", or "_".</br>
+                    <br> <strong>For more advanced tips, check out this <a href="https://docs.google.com/presentation/d/14u5qt9c_BbAl3AWu_lTuVdN1yyZfHyN6/edit#slide=id.p1">presentation</a> to sharpen your detective skills!</strong> </br>
+                </ul>
+            </aside>
+        </div>
+    </section>
+
+    <!-- Pop-up Modal -->
+    <div id="popup" class="popup">
+        <div class="popup-header">
+            <img src="{{ url_for('static', filename='simbol-x.png') }}" alt="Error icon" class="popup-icon">
+        </div>
+        <div class="popup-body">Oops... Sorry, Incorrect input</div>
+        <div class="popup-footer">
+            <button onclick="closePopup()">Ok</button>
+        </div>
+    </div>
+
+    <!-- Overlay -->
+    <div id="overlay" class="overlay"></div>
+    
+    <script>
+        function setPattern() {
+            const select = document.getElementById('pattern_option');
+            const patternInput = document.getElementById('pattern');
+            patternInput.value = select.value;
+        }
+
+        function showPopup(message) {
+            document.getElementById('popup').style.display = 'block';
+            document.getElementById('overlay').style.display = 'block';
+            document.querySelector('.popup-body').textContent = message;
+        }
+
+        function closePopup() {
+            document.getElementById('popup').style.display = 'none';
+            document.getElementById('overlay').style.display = 'none';
+        }
+
+        // Show pop-up if there's an error message
+        {% if error_message %}
+        showPopup("{{ error_message }}");
+        {% endif %}
+    </script>
+    
+</body>
+</html>
