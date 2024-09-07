@@ -18,11 +18,7 @@ RegEx Detector App is a simple and user-friendly web application designed to hel
    ```
    git clone https://github.com/arknsa/RegEx-Detector-App.git
    ```
-2. Install the necessary dependencies:
-   ```
-   pip install -r requirements.txt
-   ```
-3. Run the application:
+2. Run the application:
    ```
    python app.py
    ```
