@@ -1,5 +1,3 @@
-Sure! Based on our discussions, here’s a suggestion for the **`README.md`** content for your GitHub repository:
-
 ---
 
 # RegEx Detector App
