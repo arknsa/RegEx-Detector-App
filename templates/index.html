@@ -8,9 +8,9 @@
 </head>
 <body>
     <header>
-        <p style="font-weight: bold;">Kelompok 10</p>
+        <p style="font-weight: bold;">Kelompok A</p>
         <nav>
-            <a href="#home" class="nav-link active">Home</a>
+            <a href="#home" class="nav-link">Home</a>
             <a href="#app" class="nav-link">Detector</a>
             <a href="#result" class="nav-link">Result</a>
             <a href="#tips" class="nav-link">Tips</a>
@@ -58,7 +58,7 @@
                 <label for="text">Enter the Text to Analyze:</label><br>
                 <textarea id="text" name="text" rows="10" cols="50" style="width: 80%;" placeholder="Enter your text here...">{{ text }}</textarea><br><br>
                 
-                <button type="submit" style="width: 80%;">Detect Patterns</button>
+                <button type="submit" style="width: 80%;"><strong>Detect RegEx</strong></button>
 
                 {% if error_message %}
                 <p class="custom-error">{{ error_message }}</p>
