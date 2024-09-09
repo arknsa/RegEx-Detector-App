@@ -95,6 +95,7 @@ button[type="submit"] {
     border-radius: 6px;
     cursor: pointer;
     transition: background 0.3s ease;
+    color: #E0E0E0;
 }
 
 button[type="submit"]:hover {
@@ -114,7 +115,7 @@ button[type="submit"]:hover {
 }
 
 .highlight {
-    background-color: #FF6F61; /* Highlight deteksi dengan warna merah bata */
+    background-color: green; /* Highlight deteksi dengan warna merah bata */
     font-weight: bold;
 }
 
