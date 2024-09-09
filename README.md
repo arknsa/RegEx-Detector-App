@@ -3,7 +3,7 @@
 
 # RegEx Detector App
 
-RegEx Detector App is a simple and user-friendly web application designed to help users explore and test regular expressions (RegEx) in real-time. With an intuitive interface, users can input their own text and choose or define their own RegEx patterns to see matches highlighted in the text. You can acces this web on https://bit.ly/regex-detector-app
+RegEx Detector App is a simple and user-friendly web application designed to help users explore and test regular expressions (RegEx) in real-time. With an intuitive interface, users can input their own text and choose or define their own RegEx patterns to see matches highlighted in the text. You can acces this web on https://bit.ly/regex-detector
 
 ## Features
 
